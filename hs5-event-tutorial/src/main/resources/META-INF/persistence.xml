@@ -9,8 +9,7 @@
             Persistence unit for the JPA Hibernate Spatial Tutorial
         </description>
 
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-
+        
         <class>event.Event</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
