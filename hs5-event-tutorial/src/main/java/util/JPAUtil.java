@@ -3,6 +3,7 @@ package util;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.net.URL;
 
 /**
  * @author Karel Maesen, Geovise BVBA
@@ -14,7 +15,10 @@ public class JPAUtil {
 
     static {
         try {
-            emFactory = Persistence.createEntityManagerFactory("org.hibernate.events.jpa");
+
+//            URL resource = Thread.currentThread().getContextClassLoader().getResource( "META-INF/persistence.xml" );
+//            if (resource == null) throw new RuntimeException("No pers file found");
+            emFactory = Persistence.createEntityManagerFactory("SPATIAL-JPA");
         }catch(Throwable ex){
             System.err.println("Cannot create EntityManagerFactory.");
             throw new ExceptionInInitializerError(ex);
