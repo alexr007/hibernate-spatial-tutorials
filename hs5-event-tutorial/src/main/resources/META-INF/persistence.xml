@@ -9,7 +9,7 @@
             Persistence unit for the JPA Hibernate Spatial Tutorial
         </description>
 
-        
+
         <class>event.Event</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
@@ -19,7 +19,7 @@
             <!-- I prefer JPA properties whenever possible -->
            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/hibbrtru"/>
-           <property name="javax.persistence.jdbc.username" value="hibbrtru"/>
+           <property name="javax.persistence.jdbc.user" value="hibbrtru"/>
            <property name="javax.persistence.jdbc.password" value="hibbrtru"/>
 
 
