@@ -7,6 +7,7 @@ import javax.persistence.Id;
 
 import java.time.LocalDateTime;
 
+import org.geolatte.geom.G2D;
 import org.geolatte.geom.Point;
 
 /**
@@ -15,6 +16,7 @@ import org.geolatte.geom.Point;
 
 @Entity
 public class Event {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -22,9 +24,13 @@ public class Event {
 	private String name;
 	private String description;
 	private LocalDateTime dateTime;
-	private Point point;
+	private Point<G2D> point;
 
-	public Event(String name, String description, LocalDateTime dateTime, Point point) {
+
+	//Default constructor is required for Hibernate
+	public Event(){}
+
+	public Event(String name, String description, LocalDateTime dateTime, Point<G2D> point) {
 		this.name = name;
 		this.description = description;
 		this.dateTime = dateTime;
@@ -69,5 +75,18 @@ public class Event {
 
 	public void setPoint(Point point) {
 		this.point = point;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Event{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", dateTime=" + dateTime +
+				", point=" + point +
+				'}';
 	}
 }

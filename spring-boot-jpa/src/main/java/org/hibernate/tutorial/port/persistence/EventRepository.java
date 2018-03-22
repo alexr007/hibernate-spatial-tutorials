@@ -12,6 +12,8 @@ import org.hibernate.tutorial.domain.model.Event;
  */
 public interface EventRepository extends CrudRepository<Event, Long>{
 
-	List<Event> findNearBy(Point point, double distance);
+//	List<Event> findNearBy(Point point, double distance);
+
+	List<Event> findByName(String name);
 
 }
