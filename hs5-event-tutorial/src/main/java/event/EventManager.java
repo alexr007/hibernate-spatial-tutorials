@@ -21,49 +21,85 @@ public class EventManager {
 
 	private static final Logger logger = LoggerFactory.getLogger( EventManager.class );
 
+	private final EntityManager entityManager;
+
 	public static void main(String[] args) {
 		EventManager mgr = new EventManager();
-
-		if ( args[0].equals( "store" ) ) {
-			mgr.createAndStoreEvent( "My Event", new Date(), assemble( args ) );
-		}
-		else if ( args[0].equals( "find" ) ) {
-			List events = mgr.find( assemble( args ) );
-			for ( int i = 0; i < events.size(); i++ ) {
-				Event event = (Event) events.get( i );
-				System.out.println( "Event: " + event.getTitle() +
-											", Time: " + event.getDate() +
-											", Location: " + event.getLocation() );
+		String action = args[0];
+		try {
+			if ( action.equals( "store" ) ) {
+				storeEvent( args, mgr );
 			}
+			else if ( action.equals( "find" ) ) {
+				findEvents( args, mgr );
+			}
+		} catch (Throwable t) {
+			logger.error( "Exception on " + action, t );
+		} finally{
+			mgr.close();
+			JPAUtil.close();
 		}
-		JPAUtil.close();
+
 	}
 
-	private List find(String wktFilter) {
+	private static void findEvents(String[] args, EventManager mgr) {
+		List events = mgr.find( assemble( args ) );
+		for ( int i = 0; i < events.size(); i++ ) {
+			Event event = (Event) events.get( i );
+			System.out.println( "Event: " + event.getTitle() +
+										", Time: " + event.getDate() +
+										", Location: " + event.getLocation() );
+		}
+	}
+
+	private static void storeEvent(String[] args, EventManager mgr) {
+		mgr.storeEvent( "My Event", new Date(), assemble( args ) );
+	}
+
+	public EventManager(){
+		this.entityManager = JPAUtil.createEntityManager();
+	}
+
+	public void close(){
+		try {
+			this.entityManager.close();
+		} catch(Throwable t){
+			// do nothing
+		}
+	}
+
+	public List find(String wktFilter) {
 		Geometry filter = wktToGeometry( wktFilter );
-		EntityManager em = JPAUtil.createEntityManager();
-		Query query = em.createQuery( "select e from Event e where within(e.location, :filter) = true", Event.class );
 		logger.info("Filtering with filter geom: " + filter);
+		Query query = entityManager.createQuery( "select e from Event e where within(e.location, :filter) = true", Event.class );
 		query.setParameter( "filter", filter );
 		List resultList = query.getResultList();
-		em.close();
 		return resultList;
 	}
 
-	private void createAndStoreEvent(String title, Date theDate, String wktPoint) {
-		Geometry geom = wktToGeometry( wktPoint );
+	public void storeEvent(String title, Date theDate, String wktPoint) {
+		Event theEvent = createEvent( title, theDate, wktPoint );
+		persistEvent( theEvent );
+	}
 
+	private void persistEvent(Event theEvent) {
+		logger.info("Storing event: " + theEvent);
+		entityManager.getTransaction().begin();
+		try {
+			entityManager.persist( theEvent );
+			entityManager.getTransaction().commit();
+		} catch (Throwable t) {
+			entityManager.getTransaction().rollback();
+			throw t;
+		}
+	}
+
+	private Event createEvent(String title, Date theDate, String wktPoint) {
+		Geometry geom = wktToGeometry( wktPoint );
 		if ( !geom.getGeometryType().equals( "Point" ) ) {
 			throw new RuntimeException( "Geometry must be a point. Got a " + geom.getGeometryType() );
 		}
-
-		EntityManager em = JPAUtil.createEntityManager();
-		Event theEvent = new Event();
-		theEvent.setTitle( title );
-		theEvent.setDate( theDate );
-		theEvent.setLocation( (Point) geom );
-		em.persist( theEvent );
-		em.close();
+		return new Event(title, theDate, (Point)geom);
 	}
 
 	private Geometry wktToGeometry(String wktPoint) {
