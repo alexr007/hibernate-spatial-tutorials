@@ -14,20 +14,23 @@
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>
-           <property name="hibernate.dialect" value="org.hibernate.spatial.dialect.postgis.PostgisPG95Dialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.spatial.dialect.db2.DB2SpatialDialect"/>
 
             <!-- I prefer JPA properties whenever possible -->
-           <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-           <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/hibbrtru"/>
-           <property name="javax.persistence.jdbc.user" value="hibbrtru"/>
-           <property name="javax.persistence.jdbc.password" value="hibbrtru"/>
+            <property name="javax.persistence.jdbc.driver" value="com.ibm.db2.jcc.DB2Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:db2://localhost:50000/hibern8"/>
+            <property name="javax.persistence.jdbc.user" value="db2inst1"/>
+            <property name="javax.persistence.jdbc.password" value="dbinst1-pwd"/>
 
 
-           <property name="hibernate.show_sql" value="true"/>
-           <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.show_sql" value="true"/>
 
-           <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <!-- format_sql property is disabled because we can also control via log configuration -->
+            <!--<property name="hibernate.format_sql" value="true"/>-->
 
-       </properties>
+            <!-- enable this property to automatically create the database  -->
+            <!--<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>-->
+
+        </properties>
     </persistence-unit>
 </persistence>

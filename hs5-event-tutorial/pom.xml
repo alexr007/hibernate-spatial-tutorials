@@ -12,7 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hibernate.version>5.3.0.CR1</hibernate.version>
+        <hibernate.version>5.3.0-SNAPSHOT</hibernate.version>
     </properties>
 
     <build>
@@ -46,10 +46,17 @@
         </dependency>
 
         <!-- the postgresql driver -->
+        <!--<dependency>-->
+            <!--<groupId>postgresql</groupId>-->
+            <!--<artifactId>postgresql</artifactId>-->
+            <!--<version>8.4-701.jdbc3</version>-->
+        <!--</dependency>-->
+
+        <!-- db2 driver -->
         <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>8.4-701.jdbc3</version>
+            <groupId>com.ibm.db2</groupId>
+            <artifactId>db2jcc</artifactId>
+            <version>11.1</version>
         </dependency>
 
         <dependency>

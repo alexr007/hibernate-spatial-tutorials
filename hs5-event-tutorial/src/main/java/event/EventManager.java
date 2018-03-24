@@ -11,10 +11,15 @@ import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import util.JPAUtil;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Karel Maesen, Geovise BVBA
  */
 public class EventManager {
+
+	private static final Logger logger = LoggerFactory.getLogger( EventManager.class );
 
 	public static void main(String[] args) {
 		EventManager mgr = new EventManager();
@@ -23,7 +28,7 @@ public class EventManager {
 			mgr.createAndStoreEvent( "My Event", new Date(), assemble( args ) );
 		}
 		else if ( args[0].equals( "find" ) ) {
-			List events = mgr.find( args[1] );
+			List events = mgr.find( assemble( args ) );
 			for ( int i = 0; i < events.size(); i++ ) {
 				Event event = (Event) events.get( i );
 				System.out.println( "Event: " + event.getTitle() +
@@ -39,8 +44,12 @@ public class EventManager {
 		EntityManager em = JPAUtil.createEntityManager();
 		em.getTransaction().begin();
 		Query query = em.createQuery( "select e from Event e where within(e.location, :filter) = true", Event.class );
+		logger.info("Filtering with filter geom: " + filter);
 		query.setParameter( "filter", filter );
-		return query.getResultList();
+		List resultList = query.getResultList();
+		em.getTransaction().commit();
+		em.close();
+		return resultList;
 	}
 
 	private void createAndStoreEvent(String title, Date theDate, String wktPoint) {
@@ -64,6 +73,7 @@ public class EventManager {
 	}
 
 	private Geometry wktToGeometry(String wktPoint) {
+		logger.debug("Receiving string: " + wktPoint);
 		WKTReader fromText = new WKTReader();
 		Geometry geom = null;
 		try {
