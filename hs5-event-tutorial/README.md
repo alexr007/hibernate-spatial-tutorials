@@ -5,7 +5,7 @@ To get this tutorial code working on your system you need to
 change the settings in the `src/resources/META-INF/persistence.xml` file to correspond
 with your setup.
 
-On the first run you may want to enable the `javax.persistence.schema-generation.database.action` property so that the database schema is (re)generated.
+On the first run you may want to enable the `javax.persistence.schema-generation.database.action` property so that the database schema is automatically (re)generated.
 
 
 The application has two commands "store" and "find". You can run them as

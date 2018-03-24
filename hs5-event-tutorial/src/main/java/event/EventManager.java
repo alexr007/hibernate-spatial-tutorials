@@ -37,7 +37,6 @@ public class EventManager {
 	private List find(String wktFilter) {
 		Geometry filter = wktToGeometry( wktFilter );
 		EntityManager em = JPAUtil.createEntityManager();
-		em.getTransaction().begin();
 		Query query = em.createQuery( "select e from Event e where within(e.location, :filter) = true", Event.class );
 		query.setParameter( "filter", filter );
 		return query.getResultList();
@@ -51,15 +50,11 @@ public class EventManager {
 		}
 
 		EntityManager em = JPAUtil.createEntityManager();
-
-		em.getTransaction().begin();
-
 		Event theEvent = new Event();
 		theEvent.setTitle( title );
 		theEvent.setDate( theDate );
 		theEvent.setLocation( (Point) geom );
 		em.persist( theEvent );
-		em.getTransaction().commit();
 		em.close();
 	}
 
