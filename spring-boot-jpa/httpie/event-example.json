@@ -1,0 +1,18 @@
+{
+        "dateTime": "2018-03-31T15:23:48.247+02:00",
+        "description": "Devoxx Java Conference",
+        "name": "Devoxx",
+        "point": {
+            "coordinates": [
+                5.35,
+                53.24
+            ],
+            "crs": {
+                "properties": {
+                    "name": "EPSG:4326"
+                },
+                "type": "name"
+            },
+            "type": "Point"
+        }
+    }
