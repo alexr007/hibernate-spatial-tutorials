@@ -23,19 +23,20 @@ import static org.geolatte.geom.crs.CoordinateReferenceSystems.WGS84;
  */
 public class EventResource {
 
+	private Long id;
 	private String name;
 	private String description;
 	private OffsetDateTime dateTime;
 	private Point<G2D> point;
 
 	public static EventResource fromEvent(Event event) {
-		return new EventResource( event.getName(), event.getDescription(),
+		return new EventResource( event.getId(), event.getName(), event.getDescription(),
 								  toOffsetDateTime( event.getDateTime() ), event.getPoint()
 		);
 	}
 
 	public static Event toEvent(EventResource resource) {
-		return new Event( resource.getName(), resource.getDescription(),
+		return new Event( resource.getId(), resource.getName(), resource.getDescription(),
 						  toLocalDateTime( resource.getDateTime() ), resource.getPoint()
 		);
 	}
@@ -45,11 +46,16 @@ public class EventResource {
 
 	; //Required for constructing instances from JSON
 
-	public EventResource(String name, String description, OffsetDateTime dateTime, Point<G2D> point) {
+	public EventResource(Long id, String name, String description, OffsetDateTime dateTime, Point<G2D> point) {
+		this.id  = id;
 		this.name = name;
 		this.description = description;
 		this.dateTime = dateTime;
 		this.point = point;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getName() {
@@ -95,6 +101,7 @@ public class EventResource {
 		public EventResource generate() {
 
 			return new EventResource(
+					null,
 					generateString(10),
 					generateString(60),
 					OffsetDateTime.now().plusDays( random.nextInt(60) ),

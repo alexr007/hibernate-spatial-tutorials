@@ -19,7 +19,7 @@ public class Event {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
 	private String name;
 	private String description;
@@ -30,18 +30,19 @@ public class Event {
 	//Default constructor is required for Hibernate
 	public Event(){}
 
-	public Event(String name, String description, LocalDateTime dateTime, Point<G2D> point) {
+	public Event(Long id, String name, String description, LocalDateTime dateTime, Point<G2D> point) {
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.dateTime = dateTime;
 		this.point = point;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
