@@ -30,6 +30,10 @@ public class Application {
 		SpringApplication.run( Application.class, args );
 	}
 
+	/**
+	 * Ensure that the geolatte geojson module is added to the Json ObjectMapper
+	 * @return
+	 */
 	@Bean
 	public Module geoJsonModule(){
 		return new org.geolatte.geom.json.GeolatteGeomModule();

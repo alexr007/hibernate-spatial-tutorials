@@ -1,11 +1,14 @@
 package org.hibernate.tutorial.eventservice.port.rest.controllers;
 
+import javax.persistence.Tuple;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.geolatte.geom.G2D;
+import org.geolatte.geom.Point;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +22,11 @@ import org.slf4j.LoggerFactory;
 import org.hibernate.tutorial.eventservice.domain.model.Event;
 import org.hibernate.tutorial.eventservice.port.persistence.EventRepository;
 import org.hibernate.tutorial.eventservice.port.rest.resources.EventResource;
+import org.hibernate.tutorial.eventservice.port.rest.resources.EventResourceWithDistance;
+
+import static org.geolatte.geom.builder.DSL.g;
+import static org.geolatte.geom.builder.DSL.point;
+import static org.geolatte.geom.crs.CoordinateReferenceSystems.WGS84;
 
 /**
  * Created by Karel Maesen, Geovise BVBA on 22/03/2018.
@@ -76,4 +84,22 @@ public class EventController {
 		}
 	}
 
+	@RequestMapping(path="/events/distance/{lon}/{lat}")
+	ResponseEntity<List<EventResourceWithDistance>> getEventsWithDistance(@PathVariable Double lon, @PathVariable Double lat) {
+		log.info( String.format( "Getting events with distance from (%f,%f)" , lon, lat ));
+		try {
+			Point<G2D> refPnt = point( WGS84, g( lon, lat) );
+			List<Tuple> all = repository.findAllWithDistance( refPnt );
+			log.info("First object returned looks like: " + all.get(0));
+			List<EventResourceWithDistance> list = all
+					.stream()
+					.map( EventResourceWithDistance::from )
+					.collect( Collectors.toList() );
+
+			return ResponseEntity.ok( list );
+		} catch(Throwable t) {
+			log.error( "Error getting Event", t );
+			return ResponseEntity.status( 500 ).build();
+		}
+	}
 }
