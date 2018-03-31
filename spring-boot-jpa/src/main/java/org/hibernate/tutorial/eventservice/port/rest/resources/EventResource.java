@@ -1,14 +1,13 @@
-package org.hibernate.tutorial.port.rest.resources;
+package org.hibernate.tutorial.eventservice.port.rest.resources;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 
 import org.geolatte.geom.G2D;
 import org.geolatte.geom.Point;
 
-import org.hibernate.tutorial.domain.model.Event;
+import org.hibernate.tutorial.eventservice.domain.model.Event;
 
 /**
  * Created by Karel Maesen, Geovise BVBA on 22/03/2018.

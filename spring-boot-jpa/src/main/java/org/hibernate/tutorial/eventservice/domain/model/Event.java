@@ -1,4 +1,4 @@
-package org.hibernate.tutorial.domain.model;
+package org.hibernate.tutorial.eventservice.domain.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

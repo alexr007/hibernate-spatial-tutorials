@@ -1,11 +1,10 @@
-package org.hibernate.tutorial.port.persistence;
+package org.hibernate.tutorial.eventservice.port.persistence;
 
 import java.util.List;
 
-import org.geolatte.geom.Point;
 import org.springframework.data.repository.CrudRepository;
 
-import org.hibernate.tutorial.domain.model.Event;
+import org.hibernate.tutorial.eventservice.domain.model.Event;
 
 /**
  * Created by Karel Maesen, Geovise BVBA on 08/03/2018.

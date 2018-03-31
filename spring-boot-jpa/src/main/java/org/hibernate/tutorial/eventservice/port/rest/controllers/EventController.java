@@ -1,4 +1,4 @@
-package org.hibernate.tutorial.port.rest.controllers;
+package org.hibernate.tutorial.eventservice.port.rest.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,9 +7,9 @@ import java.util.stream.StreamSupport;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.hibernate.tutorial.domain.model.Event;
-import org.hibernate.tutorial.port.persistence.EventRepository;
-import org.hibernate.tutorial.port.rest.resources.EventResource;
+import org.hibernate.tutorial.eventservice.domain.model.Event;
+import org.hibernate.tutorial.eventservice.port.persistence.EventRepository;
+import org.hibernate.tutorial.eventservice.port.rest.resources.EventResource;
 
 /**
  * Created by Karel Maesen, Geovise BVBA on 22/03/2018.

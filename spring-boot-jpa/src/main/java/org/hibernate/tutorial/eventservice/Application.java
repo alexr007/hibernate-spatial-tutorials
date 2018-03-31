@@ -1,4 +1,4 @@
-package org.hibernate.tutorial;
+package org.hibernate.tutorial.eventservice;
 
 import java.time.LocalDateTime;
 
@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Bean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.hibernate.tutorial.domain.model.Event;
-import org.hibernate.tutorial.port.persistence.EventRepository;
+import org.hibernate.tutorial.eventservice.domain.model.Event;
+import org.hibernate.tutorial.eventservice.port.persistence.EventRepository;
 
 import static org.geolatte.geom.builder.DSL.g;
 import static org.geolatte.geom.builder.DSL.point;
