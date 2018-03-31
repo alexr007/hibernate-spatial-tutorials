@@ -66,7 +66,7 @@ public class Application {
 					} );
 
 			// fetch customers by last name
-			log.info( "Customer found with findByLastName('Bauer'):" );
+			log.info( "Find by Name the 'Java One Conference' " );
 			log.info( "--------------------------------------------" );
 			repository.findByName( "Java One Conference" ).forEach( javone -> {
 				log.info( javone.toString() );

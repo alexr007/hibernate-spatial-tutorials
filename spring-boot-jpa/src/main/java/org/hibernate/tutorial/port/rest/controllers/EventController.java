@@ -1,8 +1,14 @@
 package org.hibernate.tutorial.port.rest.controllers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.hibernate.tutorial.domain.model.Event;
+import org.hibernate.tutorial.port.persistence.EventRepository;
 import org.hibernate.tutorial.port.rest.resources.EventResource;
 
 /**
@@ -13,8 +19,18 @@ import org.hibernate.tutorial.port.rest.resources.EventResource;
 public class EventController {
 
 
-	@RequestMapping("/event")
-	public EventResource index() {
-		return new EventResource("Intro to Spring Boot");
+	final private EventRepository repository;
+
+	public EventController(EventRepository repository){
+		this.repository = repository;
+	}
+
+	@RequestMapping("/events")
+	public List<EventResource> index() {
+		Iterable<Event> events = repository.findAll();
+		return StreamSupport
+				.stream( events.spliterator() , false)
+				.map( EventResource::fromEvent )
+				.collect(Collectors.toList());
 	}
 }
