@@ -2,6 +2,7 @@ package org.hibernate.tutorial;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.databind.Module;
 import org.geolatte.geom.crs.CoordinateReferenceSystems;
 import org.geolatte.geom.crs.Geographic2DCoordinateReferenceSystem;
 import org.springframework.boot.CommandLineRunner;
@@ -27,6 +28,11 @@ public class Application {
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run( Application.class, args );
+	}
+
+	@Bean
+	public Module geoJsonModule(){
+		return new org.geolatte.geom.json.GeolatteGeomModule();
 	}
 
 	@Bean

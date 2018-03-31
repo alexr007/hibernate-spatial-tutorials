@@ -38,6 +38,12 @@
 			<artifactId>hibernate-spatial</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.geolatte</groupId>
+            <artifactId>geolatte-geojson</artifactId>
+            <version>1.2.0</version>
+		</dependency>
+
 
 		<!-- spring-boot dev-tools for automatic reloading -->
 		<dependency>

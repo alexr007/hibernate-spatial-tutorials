@@ -69,11 +69,11 @@ public class Event {
 		this.dateTime = dateTime;
 	}
 
-	public Point getPoint() {
+	public Point<G2D> getPoint() {
 		return point;
 	}
 
-	public void setPoint(Point point) {
+	public void setPoint(Point<G2D> point) {
 		this.point = point;
 	}
 
